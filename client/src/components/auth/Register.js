@@ -124,7 +124,7 @@ class Register extends Component {
             </button>
           </div>
           <div className="bottom-group">
-            <span>Already have an account yet? </span>
+            <span>Already have an account? </span>
             <Link to="/" className="link">
               Sign in
             </Link>
@@ -138,15 +138,12 @@ class Register extends Component {
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
 });
 
-export default connect(
-  mapStateToProps,
-  { registerUser }
-)(withRouter(Register));
+export default connect(mapStateToProps, { registerUser })(withRouter(Register));

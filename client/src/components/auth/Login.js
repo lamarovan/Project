@@ -73,7 +73,7 @@ class Login extends Component {
                 value={this.state.email}
                 error={errors.email}
                 id="email"
-                type="text"
+                type="email"
                 className="auth-input"
               />
               <div className="auth-error">

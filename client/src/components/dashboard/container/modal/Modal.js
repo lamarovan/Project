@@ -19,7 +19,7 @@ import "./modal.scss";
 class Modal extends Component {
   state = {
     projectName: "",
-    members: [{ name: "", email: "", role: "" }],
+    members: [{ name: "", email: "" }],
     taskName: "",
     assignee: "",
     monthDue: "",
@@ -78,7 +78,7 @@ class Modal extends Component {
       projectName: this.state.projectName,
       members: this.state.members,
     };
-    console.log(project.members);
+    // console.log(project.members);
 
     await this.props.updateProject(project);
 
@@ -104,18 +104,22 @@ class Modal extends Component {
       assignee: "",
       monthDue: "",
       dayDue: "",
-      members: [{ name: "", email: "", role: "" }],
+      members: [{ name: "", email: "" }],
     });
   };
 
+  // onSelectChange = (e) => {
+  //   if (["role"].includes(e.target.name)) {
+  //     let members = [...this.state.members];
+  //     members[e.target.dataset.id][e.target.name] = e.target.value;
+  //     this.setState({ members });
+  //   } else {
+  //     this.setState({ [e.target.id]: e.target.value });
+  //   }
+  // };
+
   onSelectChange = (e) => {
-    if (["role"].includes(e.target.name)) {
-      let members = [...this.state.members];
-      members[e.target.dataset.id][e.target.name] = e.target.value;
-      this.setState({ members });
-    } else {
-      this.setState({ [e.target.id]: e.target.value });
-    }
+    this.setState({ [e.target.id]: e.target.value });
   };
 
   createTask = (e) => {
@@ -211,6 +215,8 @@ class Modal extends Component {
     }
 
     let task = {
+      user: this.props.auth.user.email,
+      owner: this.props.projects.project.owner.email,
       id: id,
       taskName: this.state.taskName,
       dateDue: finalDate,
@@ -506,16 +512,16 @@ class Modal extends Component {
 
     // Edit project modal
     else if (this.props.edit) {
-      let roles = ["Member", "Moderator"];
+      // let roles = ["Member", "Moderator"];
 
-      let roleOptions = roles.map((role, i) => (
-        <option key={i} value={role}>
-          {role}
-        </option>
-      ));
+      // let roleOptions = roles.map((role, i) => (
+      //   <option key={i} value={role}>
+      //     {role}
+      //   </option>
+      // ));
 
       return (
-        <div className="project-modal">
+        <div className="modal">
           <span className="close-modal" onClick={this.onClose}>
             &times;
           </span>
@@ -544,8 +550,8 @@ class Modal extends Component {
           <div className="members-edit">
             {members.map((val, id) => {
               let memberId = `member-${id}`,
-                emailId = `email-${id}`,
-                roleId = `role-${id}`;
+                emailId = `email-${id}`;
+              // roleId = `role-${id}`;
               return (
                 <div className="split" key={id}>
                   <label className="form-label" htmlFor={memberId}>
@@ -572,7 +578,7 @@ class Modal extends Component {
                       onChange={this.onChange}
                     />
                   </label>
-                  <label className="form-label split-end" htmlFor={roleId}>
+                  {/* <label className="form-label split-end" htmlFor={roleId}>
                     Role (required)
                     <select
                       // required={this.state.dayDue ? true : false}
@@ -589,7 +595,7 @@ class Modal extends Component {
                       </option>
                       {roleOptions}
                     </select>
-                  </label>
+                  </label> */}
                   <span
                     className="delete"
                     onClick={this.deleteMember.bind(this, id)}
@@ -609,7 +615,7 @@ class Modal extends Component {
             </button>
             {this.props.owner.id === this.props.auth.user.id ? (
               <button
-                className="main-btn alignButton"
+                className="main-btn delete-project"
                 onClick={this.deleteProject.bind(this, this.props.id)}
               >
                 Delete Project
@@ -622,16 +628,16 @@ class Modal extends Component {
 
     // Create project modal
     else {
-      let roles = ["Member", "Moderator"];
+      // let roles = ["Member", "Moderator"];
 
-      let roleOptions = roles.map((role, i) => (
-        <option key={i} value={role}>
-          {role}
-        </option>
-      ));
+      // let roleOptions = roles.map((role, i) => (
+      //   <option key={i} value={role}>
+      //     {role}
+      //   </option>
+      // ));
 
       return (
-        <div className="project-modal">
+        <div className="modal">
           <span className="close-modal" onClick={this.onClose}>
             &times;
           </span>
@@ -657,8 +663,8 @@ class Modal extends Component {
           <div className="members">
             {members.map((val, id) => {
               let memberId = `member-${id}`,
-                emailId = `email-${id}`,
-                roleId = `role-${id}`;
+                emailId = `email-${id}`;
+              // roleId = `role-${id}`;
               return (
                 <div className="split" key={id}>
                   <label className="form-label" htmlFor={memberId}>
@@ -685,7 +691,7 @@ class Modal extends Component {
                       onChange={this.onChange}
                     />
                   </label>
-                  <label className="form-label split-end" htmlFor={roleId}>
+                  {/* <label className="form-label split-end" htmlFor={roleId}>
                     Role (required)
                     <select
                       // required={this.state.dayDue ? true : false}
@@ -703,7 +709,7 @@ class Modal extends Component {
                       </option>
                       {roleOptions}
                     </select>
-                  </label>
+                  </label> */}
                   <span
                     className="delete"
                     onClick={this.deleteMember.bind(this, id)}

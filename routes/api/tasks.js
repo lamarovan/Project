@@ -57,7 +57,7 @@ router.delete(
 router.patch(
   "/update",
   passport.authenticate("jwt", { session: false }),
-  // authRole,
+  authRole,
   (req, res) => {
     let taskFields = {};
 

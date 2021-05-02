@@ -117,13 +117,13 @@
 .members {
   margin-top: 1rem;
   height: 170px;
-  overflow: scroll;
+  overflow: auto;
   border-bottom: 1px solid $gray;
 }
 
 .members-edit {
   margin-top: 1rem;
-  overflow: scroll;
+  overflow: auto;
   border-bottom: 1px solid $gray;
   height: 130px;
 }
@@ -146,20 +146,6 @@
 
 .delete-project {
   margin-left: 335px;
-  background-color: $red;
-  border: 1px solid $red;
-
-  &:hover {
-    background-color: $red;
-    border: 1px solid $red;
-    opacity: 0.9;
-  }
-}
-
-.alignButton {
-  position: fixed;
-  bottom: 1.25rem;
-  margin-left: 485px;
   background-color: $red;
   border: 1px solid $red;
 

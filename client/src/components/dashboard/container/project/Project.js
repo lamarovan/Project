@@ -84,13 +84,6 @@ class Project extends Component {
     this.props.updateTask(task);
   }
 
-  // componentWillReceiveProps(nextProps){
-  //   if(){
-  //     this.props.getProject(this.props.match.params.project);
-  //     this.props.getTasks(this.props.match.params.project);
-  //   }
-  // }
-
   componentDidMount() {
     this.props.getProject(this.props.match.params.project);
     this.props.getTasks(this.props.match.params.project);
@@ -120,10 +113,16 @@ class Project extends Component {
   render() {
     const { tasks } = this.props.tasks;
 
-    // if(project && )
+    if (this.props.projects.projectLoading) {
+      return <Spinner />;
+    }
+    if (this.props.tasks.tasksLoading) {
+      return <Spinner />;
+    }
+
     let tasksList = tasks.map((task, index) => (
       <div className="task-input" key={task._id}>
-        {this.props.project.owner.email === this.props.auth.user.email ||
+        {/* {this.props.project.owner.email === this.props.auth.user.email ||
         task.assignee === this.props.auth.user.email ||
         task.assignee === "" ? (
           <i
@@ -143,22 +142,22 @@ class Project extends Component {
           </i>
         ) : (
           <i className="material-icons check-task">check_circle</i>
-        )}
-        {/* <i
-            className="material-icons check-task"
-            onClick={this.toggleComplete.bind(
-              this,
-              this.props.auth.user,
-              this.props.project.owner.email,
-              task._id,
-              task.taskName,
-              task.assignee,
-              task.complete,
-              task.dateDue
-            )}
-          >
-            check_circle
-          </i> */}
+        )} */}
+        <i
+          className="material-icons check-task"
+          onClick={this.toggleComplete.bind(
+            this,
+            this.props.auth.user.email,
+            this.props.project.owner.email,
+            task._id,
+            task.taskName,
+            task.assignee,
+            task.complete,
+            task.dateDue
+          )}
+        >
+          check_circle
+        </i>
         {task.complete ? (
           <span id={index} name="task" className="project-task">
             <strike>{task.taskName}</strike>
@@ -198,7 +197,7 @@ class Project extends Component {
             </span>
             <span>
               <i
-                className="material-icons check-task"
+                className="material-icons check-delete"
                 onClick={this.deleteTask.bind(this, task._id)}
               >
                 delete
@@ -216,18 +215,6 @@ class Project extends Component {
       !this.props.tasks.tasksLoading
     ) {
       const { project } = this.props;
-
-      var isModerator = false;
-      var team = this.props.project.teamMembers;
-
-      // check if member is moderator
-      for (const val of team) {
-        if (val.email == this.props.auth.user.email) {
-          isModerator = true;
-          break;
-        }
-      }
-      console.log(isModerator);
 
       return (
         <div className="main-content">
@@ -264,25 +251,46 @@ class Project extends Component {
               taskId={this.state.taskId}
             />
           </div>
-          <div className="tasks-container">
-            <div className="projects-first-row">
-              {this.props.project.owner.id === this.props.auth.user.id ? (
+
+          {tasks.length === 0 ? (
+            <div className="tasks-container">
+              <div className="no-projects">
+                <p>You have no tasks</p>
                 <button
                   className="main-btn add-btn"
                   onClick={this.toggleTaskModal}
                 >
-                  Add task
+                  Create your first task
                 </button>
-              ) : (
-                <p className="projects-column-headers">Tasks</p>
-              )}
-              <div className="projects-column-headers">
-                <p>Assignee</p>
-                <p>Due</p>
               </div>
             </div>
-            <div className="project-tasks">{tasksList}</div>
-          </div>
+          ) : (
+            <div className="tasks-container">
+              <div className="projects-first-row">
+                {this.props.project.owner.id === this.props.auth.user.id ? (
+                  <button
+                    className="main-btn add-btn"
+                    onClick={this.toggleTaskModal}
+                  >
+                    Add task
+                  </button>
+                ) : (
+                  <p className="projects-column-headers">Tasks</p>
+                )}
+                <div
+                  className={
+                    this.props.project.owner.id === this.props.auth.user.id
+                      ? "projects-column-headers"
+                      : "projects-column-headers2"
+                  }
+                >
+                  <p>Assignee</p>
+                  <p>Due</p>
+                </div>
+              </div>
+              <div className="project-tasks">{tasksList}</div>
+            </div>
+          )}
         </div>
       );
     }

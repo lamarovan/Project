@@ -44,18 +44,20 @@ class Dashboard extends Component {
         onClick={() => this.props.history.push(`/projects/${project._id}`)}
       >
         <div className="project-name">{project.name}</div>
-        {/* <div
-          className="project-info-button"
-          onClick={this.toggleEditModal.bind(
-            this,
-            project.name,
-            project.teamMembers,
-            project._id,
-            project.owner
-          )}
-        >
-          Edit project
-        </div> */}
+        {/* {this.props.project.owner.id === this.props.auth.user.id ? (
+          <div
+            className="project-info-button"
+            onClick={this.toggleEditModal.bind(
+              this,
+              project.name,
+              project.teamMembers,
+              project._id,
+              project.owner
+            )}
+          >
+            Edit project
+          </div>
+        ) : null} */}
         <div className="project-info-button">Go to project</div>
       </div>
     ));

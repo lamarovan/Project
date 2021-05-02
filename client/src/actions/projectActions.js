@@ -55,12 +55,13 @@ export const getProject = (id) => (dispatch) => {
   dispatch(setProjectLoading());
   axios
     .get(`/api/projects/${id}`)
-    .then((res) =>
+    .then((res) => {
       dispatch({
         type: GET_PROJECT,
         payload: res.data,
-      })
-    )
+      });
+      // console.log(res.data);
+    })
     .catch((err) =>
       dispatch({
         type: GET_PROJECT,

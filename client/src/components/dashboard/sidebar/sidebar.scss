@@ -86,12 +86,15 @@
 }
 
 .side-projects-header {
+  letter-spacing: 0.25em;
+  font-weight: lighter;
   font-family: $code;
+  margin-bottom: 0;
 }
 
 .project-listings {
   height: 305px;
-  overflow: scroll;
+  overflow: auto;
 
   &::-webkit-scrollbar {
     -webkit-appearance: none;
@@ -107,11 +110,12 @@
 .project-listing {
   font-size: 14px;
   padding-right: 1rem;
+  letter-spacing: 0.1em;
   margin-top: 1.25rem;
   transition: all 0.25s ease 0s;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
+  overflow: auto;
   width: 150px;
 
   &:hover {

@@ -19,9 +19,6 @@ const ProjectSchema = new Schema({
       name: {
         type: String,
       },
-      role: {
-        type: String,
-      },
     },
   ],
   date: {
